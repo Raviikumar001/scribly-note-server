@@ -8,10 +8,14 @@ router.get('/login', (req,res)=>{
 router.get(
     "/google",
     passport.authenticate("google", {
-      scope: ["profile"],
+        scope: ["profile", "email"],
     })
   );
 
+
+router.get("/google/callback", passport.authenticate("google"), (req,res)=> {
+    res.send('ok')
+})
 
 
 module.exports = router;

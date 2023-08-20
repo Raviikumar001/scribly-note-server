@@ -2,9 +2,9 @@ const express = require('express');
 const connectDB = require('./db/connect');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-
-
+const cors = require("cors");
 require('dotenv').config();
+require('./controllers/gauth-controller')
 
 //auth routers
 const authRoutes = require('./routes/auth-routes')
@@ -23,6 +23,13 @@ app.use(cookieSession({
 //initialize passport
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 
 
 
