@@ -7,6 +7,7 @@ passport.serializeUser((user,done)=>{
   done(null,user.id);
 })
 
+
 passport.deserializeUser((id,done)=> {
 User.findById(id).then( (user)=> {
   done(null,user);
@@ -20,7 +21,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile,done) {
-    console.log(profile)
+   
     //  check if user exists
     User.findOne({googleId:profile.id}).then((currentUser)=> {
       if(currentUser){
