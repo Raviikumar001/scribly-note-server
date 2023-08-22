@@ -24,8 +24,8 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
-router.get("/login", (req, res) => {
-    res.logout();
+router.get("/logout", (req, res) => {
+    req.logout();
     res.redirect(process.env.CLIENT_URL);
   });
 
