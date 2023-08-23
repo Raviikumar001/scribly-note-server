@@ -3,6 +3,13 @@ const router = express.Router();
 const passport = require("passport");
 
 
+router.post("/login", (req,res)=>{
+  console.log(req.body);
+  res.status(200).send('ok')
+
+ })
+
+
 router.get("/login/success", (req, res) => {
   if (req.user) {
     res
@@ -28,6 +35,22 @@ router.get("/logout", (req, res) => {
     req.logout();
     res.redirect(process.env.CLIENT_URL);
   });
+
+
+
+
+
+
+ router.post("/register", (req,res)=> {
+   console.log(req.body);
+   res.status(200).send('ok')
+
+ })
+
+ router.get('/user',(req, res)=> {
+   res.send('ok')
+ })
+
 
 router.get(
   "/google",

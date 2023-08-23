@@ -3,6 +3,9 @@ const connectDB = require('./db/connect');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const cors = require("cors");
+const bcrypt= require('bcryptjs');
+const bodyParser= require('body-parser')
+const cookieParser = require('cookie-parser')
 require('dotenv').config();
 require('./controllers/gauth-controller')
 
@@ -15,10 +18,20 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 //cookie session for 1 dayin milliseconds.
+app.use(cookieParser(process.env.COOKIE_KEY));
+
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 *1000,
     keys: [process.env.COOKIE_KEY]
   }));
+ 
+//middleware
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
+
+
+
 
 //initialize passport
 app.use(passport.initialize())
@@ -34,6 +47,7 @@ app.use(cors({
 
 
 app.use('/auth',authRoutes);
+
 
 app.get('/',(req,res)=>{
 res.send('Welcome to Scribly note')
