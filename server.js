@@ -6,7 +6,9 @@ const cors = require("cors");
 const bcrypt= require('bcryptjs');
 const bodyParser= require('body-parser')
 const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
 require('dotenv').config();
+
 require('./controllers/gauth-controller')
 
 //auth routers
@@ -18,7 +20,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 //cookie session for 1 dayin milliseconds.
-app.use(cookieParser(process.env.COOKIE_KEY));
+
+app.use(helmet())
+app.use(cookieParser());
 
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 *1000,
