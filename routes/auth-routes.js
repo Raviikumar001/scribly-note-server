@@ -3,23 +3,44 @@ const router = express.Router();
 const passport = require("passport");
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
-const { Login, Register }= require('../controllers/auth-router')
 
 
- router.route('/login').post(Login);
- router.route('/register').post(Register);
+
+router.post("/register", (req, res) => {
+  console.log(req.body.email, req.body.username) 
+    User.findOne({ email: req.body.email }, async (err, doc) => {
+      if (err) throw err;
+      if (doc) res.send("User Already Exists");
+      if (!doc) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  
+        const newUser = new User({
+          username: req.body.username,
+          email:req.body.email,
+          password: hashedPassword,
+          registrationDate: req.body.registrationDate
+  
+        });
+        await newUser.save();
+        console.log(newUser)
+        res.send("User Created");
+      }
+    });
+  });
+
 
 
 router.get("/login/success", (req, res) => {
   console.log(req.user, "req user in auth route")
-   console.log(req.cookies)
-  if (req.user || req.session.user)  {
+  const userWithoutPassword = {...req.user}
+  userWithoutPassword.password = undefined
+  if (req.user )  {
     res
       .status(200)
       .json({
         error: false,
         message: "Success fully logged in",
-        user: req.user,
+        user: userWithoutPassword,
       });
   } else {
     res.status(403).json({ error: true, message: "Not Authorised" });
@@ -45,54 +66,13 @@ router.get("/logout", (req, res) => {
 
 
 
-//  router.post("/register", async (req,res)=> {
-//   console.log(req.body.username)
-//   try {
-//     const currentUser = await User.findOne({ email: req.body.email });
-
-//     if(currentUser)
-//      {
-//        res.send("user already Exists");
-//      }  else {
-//       const hashedPassword = await bcrypt.hash(req.body.password,10)
-//       console.log(hashedPassword)
-//       const newUser = new User({
-//         username: req.body.username,
-//         email: req.body.email,
-//         password: hashedPassword
-//       });
-//       newUser.save();
-//       console.log(newUser)
-//       res.send("User Created",);
-
-//     }
-//   } catch (error){
-//     console.error(error);
-//   }})
-
-    
-   
-  //  async(err, doc)=> {
-  //   if(err) throw  err;
-  //   if (doc) res.send('User already Exists');
-  //   if(!doc){
-  //     const newUser = new User({
-  //       username: req.body.username,
-  //       email: req.body.email,
-  //       password: req.body.password
-  //     });
-  //     await newUser.save();
-  //     console.log(newUser)
-  //     res.send("User Created");
-  //   }
-  //  }
  
 
  
 
- router.get('/user',(req, res)=> {
-   res.send('ok')
- })
+//  router.get('/user',(req, res)=> {
+//    res.send('ok')
+//  })
 
 
 router.get(
