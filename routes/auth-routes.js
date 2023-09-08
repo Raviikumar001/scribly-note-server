@@ -31,9 +31,11 @@ router.post("/register", (req, res) => {
 
 
 router.get("/login/success", (req, res) => {
-  console.log(req.user, "req user in auth route")
-  const userWithoutPassword = {...req.user}
+
+  const userWithoutPassword = req.user
   userWithoutPassword.password = undefined
+  console.log(userWithoutPassword, "user without password")
+  console.log()
   if (req.user )  {
     res
       .status(200)

@@ -73,22 +73,24 @@ passport.use(new passportLocal({
   passwordField: "password"
 },
   function(email,password,done) {
-      console.log(email, password)
+      console.log(email, password, "in passport")
       User.findOne({email:email},async function (err,user){
-          console.log(user.email)
+          // console.log(user.email)
           if(err) { 
+              console.log('getting error here')
               return done(err);
           }
           if(!user){
-              return done(null, false, {message: "Incorrect username. "});
+              // return done(null, false, {message: "User Does not Exist"});
+           return done(new Error('No user registered with this email'))
           }
-          if(await bcrypt.hash(password,user.password) ){
+          if(await bcrypt.compare(password,user.password) ){
               user.password=undefined;
               return done (null,user);
           }
           
-          return done(null,false, {message: "Incorrect password"})
-          
+          // return done(null,false, {message: "Incorrect password"})
+          return  done(new Error('Password is not correct'))
       })
   }
 ))
@@ -108,12 +110,34 @@ passport.deserializeUser((id, done)=>{
   })
 });
 
+const cheackUser= async(req, res ,next)=>
+{
+  const email = req.body.email;
+  const password = req.body.password;
 
-app.post('/login', passport.authenticate('local'),
-function(req,res){
-    res.send(req.user)
-    
-} );
+  const user = await User.findOne({ email });
+  console.log(user)
+  if(!user)
+  {
+   return  res.status(404).json({message: "User does not exist"})
+  }
+  const isPasswordCorrect = await bcrypt.compare(password,user.password)
+  if (!isPasswordCorrect) {
+    return res.status(401).json({message: "Passwored is incorrect"})
+  }
+
+  next()
+}
+
+app.post('/login',cheackUser ,(req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    res.status(200).json({ message: 'Authentication successful', user });
+  })(req, res, next);
+});
+
+
+
+
 //
 app.use('/auth',authRoutes);
 
