@@ -59,6 +59,22 @@ router.get("/get-note", isAuthticated,async (req,res)=>{
 
 
 
+router.patch("/update-note/:id", isAuthticated, async(req,res)=> {
+        const id = req.params.id;
+        console.log(id, "id params")
+        const title = req.body.title;
+        const body = req.body.body;
+    try {
+    //    const NoteToUpdate = await Notes.find({_id:id});
+    //    console.log(NoteToUpdate, "notes to update"); 
+       const updateNote = await Notes.findOneAndUpdate({_id:id}, {title:title, body:body},{new: true})
+       res.status(200).json({updateNote ,message:"Note updated succefully"});
+    } catch (error) {
+        
+    }
+})
+
+
 
 
 module.exports = router;

@@ -244,7 +244,7 @@ usernameField:"email",
 passwordField: "password"
 },
 function(email,password,done) {
-    console.log(email, password, "in passport")
+   
     User.findOne({email:email},async function (err,user){
         console.log(user)
         if(err) { 
@@ -289,7 +289,7 @@ const cheackUser= async(req, res ,next)=>
   const password = req.body.password;
 
   const user = await User.findOne({ email });
-  console.log(user)
+ 
   if(!user)
   {
    return  res.status(404).json({message: "User does not exist"})
