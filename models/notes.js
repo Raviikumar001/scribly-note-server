@@ -21,12 +21,12 @@ body: {
     required:false
 },
 lastModified: {
-    type:Date,
+    type:String,
     required:false,
     default:Date.now
 },
 dateCreated:{
-    type:Date,
+    type:String,
     required:false,
     default: Date.now
 }
