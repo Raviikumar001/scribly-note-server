@@ -12,8 +12,8 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: false,
     unique:false,
-    // minlength:3,
-    maxlength:200
+    
+    
   },
 body: {
     type:String,
@@ -21,12 +21,12 @@ body: {
     required:false
 },
 lastModified: {
-    type:String,
+    type:Date,
     required:false,
     default:Date.now
 },
 dateCreated:{
-    type:String,
+    type:Date,
     required:false,
     default: Date.now
 }

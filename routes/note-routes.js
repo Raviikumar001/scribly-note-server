@@ -28,8 +28,8 @@ router.post('/create-note',isAuthticated,async(req,res)=>{
         console.log(dateCreated);
         const newNote = new Notes({
             creator: creator,
-            title: "How to make a Rice",
-            body: "kjdlsjfljslkdj",
+            title: "",
+            body: "",
             lastModified:"",
             dateCreated:dateCreated
         })
@@ -44,7 +44,7 @@ router.post('/create-note',isAuthticated,async(req,res)=>{
 })
 
 
-router.get("/get-note", isAuthticated,async (req,res)=>{
+router.get("/get-notes", isAuthticated,async (req,res)=>{
     try {
         
         const notes = await Notes.find({creator:req.user.id});
@@ -57,20 +57,35 @@ router.get("/get-note", isAuthticated,async (req,res)=>{
     }
 })
 
+router.get("/get-note/:id", isAuthticated, async(req,res)=>{
+      const id = req.params.id;
+     console.log(id);
+
+    try {
+        const note = await Notes.findOne({_id:id})
+        res.status(200).json({note, message:"Notes sent"})
+    } catch (error) {
+        res.status(500).json({message: "Note fetch  Failed"})
+    }
+
+})
+
 
 
 router.patch("/update-note/:id", isAuthticated, async(req,res)=> {
         const id = req.params.id;
-        console.log(id, "id params")
+       
         const title = req.body.title;
         const body = req.body.body;
+        const lastModified = req.body.lastModified;
+        console.log(id,title, lastModified, "in update")
     try {
     //    const NoteToUpdate = await Notes.find({_id:id});
     //    console.log(NoteToUpdate, "notes to update"); 
-       const updateNote = await Notes.findOneAndUpdate({_id:id}, {title:title, body:body},{new: true})
+       const updateNote = await Notes.findOneAndUpdate({_id:id}, {title:title, body:body,lastModified:lastModified },{new: true})
        res.status(200).json({updateNote ,message:"Note updated succefully"});
     } catch (error) {
-        
+        res.status(500).json({message: "Update reqest Failed"})
     }
 })
 
