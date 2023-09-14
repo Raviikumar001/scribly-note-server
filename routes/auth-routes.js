@@ -35,7 +35,7 @@ router.post("/register", (req, res) => {
 
 
 router.get("/login/success", (req, res) => {
-
+  
   const userWithoutPassword = req.user
   console.log(req.user)
   // userWithoutPassword.password = undefined

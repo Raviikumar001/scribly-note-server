@@ -70,11 +70,11 @@ app.use(cors({
       secret: "secretcode",
       resave: true,
       saveUninitialized: true,
-      store: MongoStore.create({
-        mongoUrl: process.env.MONGO_DB_URI, //YOUR MONGODB URL
-        ttl: 14 * 24 * 60 * 60,
-        autoRemove: 'native' 
-    })
+    //   store: MongoStore.create({
+    //     mongoUrl: process.env.MONGO_DB_URI, //YOUR MONGODB URL
+    //     ttl: 14 * 24 * 60 * 60,
+    //     autoRemove: 'native' 
+    // })
     })
   );
 
