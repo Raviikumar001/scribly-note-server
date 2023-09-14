@@ -51,7 +51,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: "https://scribly-note.vercel.app",
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
