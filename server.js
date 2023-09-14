@@ -90,8 +90,8 @@ app.use(cors({
   //initialize passport
 app.use(passport.initialize())
 app.use(passport.session())
-require('./controllers/gauth-controller')
 app.use('/auth',authRoutes);
+require('./controllers/gauth-controller')
 app.use('/api', notesRoutes)
 
 // passport local code
