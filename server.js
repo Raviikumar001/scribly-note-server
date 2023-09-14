@@ -166,6 +166,7 @@ const cheackUser= async(req, res ,next)=>
 app.post('/login',cheackUser, passport.authenticate('local'),
 function(req,res){
   const user = req.user
+  req.session.user= req.user
   res.status(200).json({ message: 'Authentication successful', user});
 } );
 
