@@ -90,7 +90,7 @@ router.get(
 );
 
 router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: `${process.env.CLIENT_URL}app`,
+    successRedirect: "https://scribly-note.vercel.app/app",
     failureRedirect: "/login/failed",
 }));
 
