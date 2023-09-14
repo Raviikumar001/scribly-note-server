@@ -38,7 +38,7 @@ router.get("/login/success", (req, res) => {
 
   const userWithoutPassword = req.user
   console.log(req.user)
-  userWithoutPassword.password = undefined
+  // userWithoutPassword.password = undefined
   console.log(userWithoutPassword, "user without password")
 
   if (req.user )  {
