@@ -38,7 +38,7 @@ router.get("/login/success", (req, res) => {
 
   const userWithoutPassword = req.user
   console.log(req.user)
-  // userWithoutPassword.password = undefined
+  userWithoutPassword.password = undefined
   console.log(userWithoutPassword, "user without password")
 
   if (req.user )  {
@@ -90,7 +90,7 @@ router.get(
 );
 
 router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL,
+    successRedirect: `${process.env.CLIENT_URL}app`,
     failureRedirect: "/login/failed",
 }));
 
