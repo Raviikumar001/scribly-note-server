@@ -51,7 +51,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://scribly-note.vercel.app",
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
@@ -98,8 +98,8 @@ app.use(cors({
   //initialize passport
 app.use(passport.initialize())
 app.use(passport.session())
-app.use('/auth',authRoutes);
 require('./controllers/gauth-controller')
+app.use('/auth',authRoutes);
 app.use('/api', notesRoutes)
 
 // passport local code
