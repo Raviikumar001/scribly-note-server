@@ -50,40 +50,63 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
+// app.use(cors({
+//     origin:   ["https://scribly-note.vercel.app", "http://127.0.0.0:3000"],
+//     methods: "GET,POST,PUT,DELETE,PATCH",
+//     credentials: true,
+//     allowedHeaders: "Content-Type"
+//   })
+// );
+
 app.use(cors({
-    origin: "*",
-  
-    credentials: true,
+  origin:[ "https://scribly-note.vercel.app","http://127.0.0.0:3000"],
+  methods: "GET,POST,PUT,DELETE,PATCH",
+  credentials: true,
+  allowedHeaders:"Content-Type,Authorization"
   })
-);
-
-
-
-
-
-
-
-
-
-  app.use(
-    session({
-      secret: "secretcode",
-      resave: true,
-      saveUninitialized: true,
-      store: MongoStore.create({
-        mongoUrl: `${process.env.MONGO_DB_URI}`, //YOUR MONGODB URL
-        ttl: 14 * 24 * 60 * 60,
-        autoRemove: 'native' 
-    }),
-    cookie: {
-      secure: true, // Set to true if using HTTPS
-      httpOnly: true,
-      sameSite: 'none', // Recommended for CSRF protection
-      // Other cookie options...
-    },
-    })
   );
 
+
+
+
+
+
+
+  // app.use(
+  //   session({
+  //     secret: "secretcode",
+  //     resave: true,
+  //     saveUninitialized: true,
+  //     store: MongoStore.create({
+  //       mongoUrl: `${process.env.MONGO_DB_URI}`, //YOUR MONGODB URL
+  //       ttl: 14 * 24 * 60 * 60,
+  //       autoRemove: 'native' 
+  //   })
+   
+  //   })
+  // );
+
+
+
+app.use(
+  session({
+  secret: "secretcode",
+  resave: true,
+  saveUninitialized: true,
+  store: MongoStore.create({
+  mongoUrl: `${process.env.MONGO_DB_URI}`, //YOUR MONGODB URL
+  ttl: 14 * 24 * 60 * 60,
+  autoRemove: 'native'
+  
+  }),
+  cookie:{
+   //  sameSite: "none",
+  //secrure:true,
+   //domain:"127.0.0.0"     
+  }
+  })
+  );
+  
 
 
 
@@ -96,8 +119,8 @@ app.use(cookieParser("secretcode"));
 app.use(passport.initialize())
 app.use(passport.session())
 require('./controllers/gauth-controller')
-app.use('/auth',authRoutes);
-app.use('/api', notesRoutes);
+app.use('/v1/auth',authRoutes);
+app.use('/v1/api', notesRoutes);
 
 // passport local code
 
@@ -170,17 +193,17 @@ const cheackUser= async(req, res ,next)=>
 
 
 
-app.post('/login',cheackUser, passport.authenticate('local'),
+app.post('/v1/login',cheackUser, passport.authenticate('local'),
 function(req,res){
-  const user = req.user
-  req.session.user= req.user
-  res.status(200).json({ message: 'Authentication successful', user});
+const user = req.user
+req.session.user= req.user
+res.status(200).json({ message: 'Authentication successful', user});
 } );
 
 //
 
 
-app.get('/',(req,res)=>{
+app.get('/v1',(req,res)=>{
 res.send('Welcome to Scribly note')
 })
 
