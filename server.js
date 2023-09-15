@@ -57,6 +57,17 @@ app.use(cors({
   })
 );
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); // Replace with your frontend's domain
+  // You can also use '*' to allow any domain, but this is not recommended for production.
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true'); // If you need to send credentials (e.g., cookies)
+  next();
+});
+
+
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
@@ -74,9 +85,7 @@ app.use(cors({
 //     })
 //   );
 
-app.use((req, res, next)=> {
-  console.log(req.user,"/n",req.session,req.user, "req console")
-})
+
 
   app.use(
     session({
@@ -110,7 +119,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 require('./controllers/gauth-controller')
 app.use('/auth',authRoutes);
-app.use('/api', notesRoutes)
+app.use('/api', notesRoutes);
 
 // passport local code
 
@@ -159,6 +168,8 @@ passport.deserializeUser((id, done)=>{
       return done(null, user)
   })
 });
+
+
 
 const cheackUser= async(req, res ,next)=>
 {
