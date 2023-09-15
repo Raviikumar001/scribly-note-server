@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs')
 
 
 
+
 router.post("/register", (req, res) => {
  
     User.findOne({ email: req.body.email }, async (err, doc) => {

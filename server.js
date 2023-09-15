@@ -74,6 +74,10 @@ app.use(cors({
 //     })
 //   );
 
+app.use((req, res, next)=> {
+  console.log(req.user,"/n",req.session,req.user, "req console")
+})
+
   app.use(
     session({
       secret: "secretcode",
