@@ -83,7 +83,13 @@ app.use(cors({
         mongoUrl: `${process.env.MONGO_DB_URI}`, //YOUR MONGODB URL
         ttl: 14 * 24 * 60 * 60,
         autoRemove: 'native' 
-    })
+    }),
+    cookie: {
+      secure: true, // Set to true if using HTTPS
+      httpOnly: true,
+      sameSite: 'none', // Recommended for CSRF protection
+      // Other cookie options...
+    },
     })
   );
 
@@ -91,7 +97,7 @@ app.use(cors({
 
 
 
-  app.use(cookieParser("secretcode"));
+app.use(cookieParser("secretcode"));
 
 
   
