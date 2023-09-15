@@ -50,12 +50,12 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
-// app.use(cors({
-//     origin: "https://scribly-note.vercel.app",
-//     methods: "GET,POST,PUT,DELETE,PATCH",
-//     credentials: true,
-//   })
-// );
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE,PATCH",
+    credentials: true,
+  })
+);
 
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -64,7 +64,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 //   next();
 // })
 
-app.use(cors())
+
 //another solution
 // app.use(
 //     session({
