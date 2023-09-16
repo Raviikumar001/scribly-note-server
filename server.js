@@ -116,6 +116,7 @@ app.use(cookieParser("secretcode"));
 app.use((req, res, next) => {
   // Access and log the cookies from the request object
   const cookies = req.cookies;
+  console.log(req)
   console.log('Cookies:', JSON.stringify(cookies));
 
   // Pass control to the next middleware or route handler
