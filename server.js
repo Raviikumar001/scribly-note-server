@@ -113,6 +113,14 @@ app.use(
 
 app.use(cookieParser("secretcode"));
 
+app.use((req, res, next) => {
+  // Access and log the cookies from the request object
+  const cookies = req.cookies;
+  console.log('Cookies:', cookies);
+
+  // Pass control to the next middleware or route handler
+  next();
+});
 
   
   //initialize passport
