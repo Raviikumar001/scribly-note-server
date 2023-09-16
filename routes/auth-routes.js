@@ -104,9 +104,8 @@ router.get(
   (req, res) => {
     console.log(req.user);
     req.session.user = req.user;
-
-    
-    res.send(200).json({message:"user authenticated"});
+    res.redirect("/app")
+ 
   }
 );
 
