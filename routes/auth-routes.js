@@ -91,9 +91,24 @@ router.get(
   })
 );
 
-router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: "https://scribly-note.vercel.app/app",
+// router.get("/google/callback", passport.authenticate("google", {
+//     successRedirect: "https://scribly-note.vercel.app/app",
+//     failureRedirect: "/login/failed",
+// }));
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
     failureRedirect: "/login/failed",
-}));
+  }),
+  (req, res) => {
+    console.log(req.user, req);
+    req.session.user = req.user;
+
+    
+    res.redirect("https://scribly-note.netlify.app/app");
+  }
+);
+
 
 module.exports = router;
