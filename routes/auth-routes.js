@@ -102,7 +102,7 @@ router.get(
     failureRedirect: "/login/failed",
   }),
   (req, res) => {
-    console.log(req.user, req);
+    console.log(req.user);
     req.session.user = req.user;
 
     
