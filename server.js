@@ -110,7 +110,8 @@ app.use(
   cookie:{
    //  sameSite: "none",
   //secrure:true,
-   //domain:"127.0.0.0"     
+   //domain:"127.0.0.0"    
+   httpOnly:false 
   }
   })
   );
