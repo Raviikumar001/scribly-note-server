@@ -106,7 +106,7 @@ router.get(
     req.session.user = req.user;
 
     
-    res.redirect("https://scribly-note.netlify.app/app");
+    res.send(200).json({message:"user authenticated"});
   }
 );
 
