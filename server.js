@@ -96,7 +96,13 @@ app.use(
   ttl: 14 * 24 * 60 * 60,
   autoRemove: 'native'
   
-  })
+  }),
+    cookie:{
+      sameSite: "none",
+      httpOnly:true,
+      secure:true
+    }
+  
   })
   );
   
