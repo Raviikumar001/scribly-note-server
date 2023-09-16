@@ -66,7 +66,8 @@ router.get("/login/failed", (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.logout();
-    res.redirect("https://scribly-note.netlify.app");
+    // res.redirect("https://scribly-note.netlify.app");
+    res.send(200).json({message: "successfully logged out"})
   });
 
 
