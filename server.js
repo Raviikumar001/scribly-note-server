@@ -116,7 +116,7 @@ app.use(cookieParser("secretcode"));
 app.use((req, res, next) => {
   // Access and log the cookies from the request object
   const cookies = req.cookies;
-  console.log('Cookies:', cookies);
+  console.log('Cookies:', JSON.stringify(cookies));
 
   // Pass control to the next middleware or route handler
   next();
@@ -141,9 +141,9 @@ passwordField: "password"
 function(email,password,done) {
    
     User.findOne({email:email},async function (err,user){
-        console.log(user)
+        // console.log(user)
         if(err) { 
-            console.log('getting error here')
+            // console.log('getting error here')
             return done(err);
         }
         if(!user){
