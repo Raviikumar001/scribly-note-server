@@ -59,7 +59,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 // );
 
 app.use(cors({
-  origin:[ "https://scribly-note.vercel.app","http://127.0.0.0:3000"],
+  origin:["http://127.0.0.0:3000", "https://scribly-note.netlify.app"],
   methods: "GET,POST,PUT,DELETE,PATCH",
   credentials: true,
   allowedHeaders:"Content-Type,Authorization"
