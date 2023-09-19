@@ -39,6 +39,7 @@ const corsOptions = {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
     res.setHeader('Set-Cookie', ['sameSite=none', 'secure=true', 'domain=http://localhost:5173', 'httpOnly=true']);
+   
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"
@@ -80,9 +81,3 @@ start();
 
 
 
-//  {
-sameSite : "none",
-secure: true,
-domain: "myapp.vercel.app"
-httpOnly: true
-}
