@@ -37,7 +37,7 @@ const corsOptions = {
 
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST","DELETE","PATCH");
     res.setHeader('Set-Cookie', ['sameSite=none', 'secure=true', 'domain=http://localhost:5173', 'httpOnly=true']);
    
     res.header(

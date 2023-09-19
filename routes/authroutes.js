@@ -95,11 +95,11 @@ router.get('/google/callback',
 	}),
   function(req,res) {
 
-    console.log(req.user, "new user")
+    console.log(req.user, "new user");  
     const token = jwt.sign({user:{"email": req.user.email}, id:req.user._id}, process.env.ACCESS_SECRET);
     console.log(token);
-    res.cookie('x-auth-cookie', token);
-    res.redirect(process.env.CLIENT_URL);
+    
+    res.redirect(`${process.env.CLIENT_URL}/OAuthRedirecting?token=${token}`);
   }
 
 	)
