@@ -10,6 +10,7 @@ const passport = require('passport')
 
 require('./controllers/google-auth');
 const authRoutes = require("./routes/authroutes");
+const cookieParser = require('cookie-parser');
 //
 
 const app = express();
@@ -17,18 +18,35 @@ const app = express();
 const port = process.env.PORT || 5000
 
 //middleware
-
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use(cors({
-  origin:"http://localhost:5173",
-  methods: "GET,POST,PUT,DELETE,PATCH",
-  credentials: true,
-  allowedHeaders:"Content-Type,Authorization"
-  })
-  );
+// app.use(cors({
+//   origin:"http://localhost:5173",
+//   methods: "GET,POST,PUT,DELETE,PATCH",
+//   credentials: true,
+//   allowedHeaders:"Content-Type,Authorization"
+//   })
+//   );
 
+const corsOptions = {
+    origin: true,
+    credentials: true,
+  };
+
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.setHeader('Set-Cookie', ['sameSite=none', 'secure=true', 'domain=http://localhost:5173', 'httpOnly=true']);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+
+app.use(cors(corsOptions));
 //routes
 app.use(passport.initialize());
 
@@ -58,3 +76,13 @@ const start = async ()=> {
 }
 
 start();
+
+
+
+
+//  {
+sameSite : "none",
+secure: true,
+domain: "myapp.vercel.app"
+httpOnly: true
+}
