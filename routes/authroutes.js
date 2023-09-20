@@ -29,6 +29,7 @@ router.post("/register", async(req, res) => {
   
     await newUser.save();
     console.log(newUser);
+    
     return res.status(200).json({ message: "User created" });
   } catch (err) {
     // Handle errors here
@@ -62,7 +63,7 @@ const cheackUser= async(req, res ,next)=>
 router.post('/login',cheackUser, passport.authenticate('local', {session:false}),
 function(req,res){
   const user = req.user
-  const token = jwt.sign({user:{"email": req.user.email}, id:req.user._id}, process.env.ACCESS_SECRET);
+  const token = jwt.sign({id:req.user._id}, process.env.ACCESS_SECRET, {expiresIn:"1d"});
   console.log(token);
   
 
@@ -97,7 +98,7 @@ router.get('/google/callback',
 
     console.log(req.user, "new user");  
     const user = JSON.stringify(req.user);
-    const token = jwt.sign({id:req.user._id}, process.env.ACCESS_SECRET);
+    const token = jwt.sign({id:req.user._id}, process.env.ACCESS_SECRET, {expiresIn:"1d"});
     console.log(token);
     
     res.redirect(`${process.env.CLIENT_URL}/app/Oauth/?token=${token}&user=${user}`);

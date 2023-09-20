@@ -10,7 +10,9 @@ const passport = require('passport')
 
 require('./controllers/google-auth');
 const authRoutes = require("./routes/authroutes");
-const cookieParser = require('cookie-parser');
+const noteRoutes = require("./routes/noteRoutes");
+
+
 //
 
 const app = express();
@@ -18,7 +20,7 @@ const app = express();
 const port = process.env.PORT || 5000
 
 //middleware
-app.use(cookieParser())
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -52,7 +54,7 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 
 app.use("/auth", authRoutes);
-
+app.use("/api", noteRoutes );
 
 
 app.get("/", (req,res)=>{
