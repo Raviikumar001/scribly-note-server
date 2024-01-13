@@ -3,22 +3,26 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;;
 const User= require('../models/user');
  
 
-passport.serializeUser((user,done)=>{
-  done(null,user.id);
-})
+// passport.serializeUser((user,done)=>{
+//   done(null,user.id);
+// })
 
 
-passport.deserializeUser((id,done)=> {
-User.findById(id).then( (user)=> {
-  done(null,user);
-})
-})
+// passport.deserializeUser((id,done)=> {
+// User.findById(id).then( (user)=> {
+//   done(null,user);
+// })
+// })
+
+
+// passport.serializeUser((user, done) => done(null, user));
+// passport.deserializeUser((user, done) => done(null, user));
 
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://scriblle.onrender.com/v1/auth/google/callback",
+    callbackURL: "http://localhost:5000/v1/auth/google/callback",
     scope: ["profile", "email"]
   },
   function(accessToken, refreshToken, profile,done) {
@@ -30,7 +34,7 @@ passport.use(new GoogleStrategy({
           done(null, currentUser);
       }else{
         new User({
-          username: profile.displayName,
+          name: profile.displayName,
           googleId: profile.id,
           email: profile.emails[0].value,
       }).save().then((newUser) => {
