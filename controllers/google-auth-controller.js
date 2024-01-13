@@ -22,7 +22,7 @@ const User= require('../models/user');
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/v1/auth/google/callback",
+    callbackURL: "https://scribly-note-server-production.up.railway.app/v1/auth/google/callback",
     scope: ["profile", "email"]
   },
   function(accessToken, refreshToken, profile,done) {
