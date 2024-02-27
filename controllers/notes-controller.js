@@ -113,19 +113,6 @@ const deleteNote = async (req, res, next) => {
 };
 
 
-// router.delete("/delete-note/:id", async(req,res)=> {
-
-//     const id= req.params.id;
-//     console.log(id, "id to be deleted")
-//     try {
-//         const noteToDelete = await Notes.findOne({_id :id});
-//         console.log(noteToDelete)
-//         await noteToDelete.remove();
-//         res.status(200).json({message: "successfully removed note"})
-//     } catch (error) {
-//         res.status(500).json({message:"Note not deleted"});
-//     }
-// })
 
 
 module.exports = {
